@@ -13,8 +13,7 @@ use yii\web\AssetBundle;
 
 class VueAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@common/web';
     public $css = [
     ];
     public $js = [
