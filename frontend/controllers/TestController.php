@@ -11,6 +11,7 @@ namespace frontend\controllers;
 
 use yii\web\Controller;
 use yii\helpers\Url;
+use Yii;
 
 class TestController extends Controller
 {
@@ -20,6 +21,6 @@ class TestController extends Controller
     }
 
     public function actionIndex(){
-        echo Url::to(['@web/vue/vue.js'],true);
+        echo Yii::$app->request->getUserIP();
     }
 }
