@@ -19,7 +19,7 @@ class BaseController extends Controller
     {
         parent::init();
         // 判断是否登录
-        if(Yii::$app->user->isGuest)
+        if(!Yii::$app->user->isGuest)
             return $this->goHome();
     }
 
