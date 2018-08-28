@@ -19,6 +19,8 @@ class Admin extends \common\models\Admin implements IdentityInterface
 {
     public $password;
     public $rememberMe = true;
+    /** @var  Admin */
+    public static $_user;
     
     /**
      * 添加行为
@@ -42,7 +44,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
             ['rememberMe', 'boolean'],
             ['username', 'validateUsername'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+//            ['password', 'validatePassword'],
         ]);
     }
 
@@ -67,9 +69,13 @@ class Admin extends \common\models\Admin implements IdentityInterface
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validateUsername($attribute, $params){
-        $res = static::findOne('username="'.$this->username.'"');
-        if(!$res) $this->addError($attribute, '用户不存在，请重新输入用户名');
+    public function validateUsername($attribute, $params)
+    {
+        static::$_user = $this->getUserByUserName($this->username);
+        echo '<pre>';
+        print_r(static::$_user);
+        echo '</pre>';exit;
+        if(!static::$_user) $this->addError($attribute, '用户不存在，请重新输入用户名');
     }
 
     /**
@@ -77,8 +83,12 @@ class Admin extends \common\models\Admin implements IdentityInterface
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params){
-        $res = Yii::$app->security->validatePassword($this->password, $this->password_hash);
+    public function validatePassword($attribute, $params)
+    {
+        echo '<pre>';
+        print_r(static::$_user);
+        echo '</pre>';exit;
+        $res = Yii::$app->security->validatePassword($this->password, static::$_user->password_hash);
         if(!$res) $this->addError($attribute, '密码输入错误请重新输入');
     }
 
@@ -92,6 +102,28 @@ class Admin extends \common\models\Admin implements IdentityInterface
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
+    /**
+     * 登录
+     * @return bool
+     */
+    public function login()
+    {
+        if (!$this->validate() || !static::$_user) return false;
+        $_duration = $this->rememberMe ? 3600 * 24 * 30 : 0;
+        return Yii::$app->user->login(static::$_user, $_duration);
+    }
+    
+    /**
+     * 通过用户名获取用户信息
+     * @param $username
+     * @return null|static
+     */
+    public function getUserByUserName($username)
+    {
+        static::$_user = static::findONe(['username' => $username]);
+        return static::$_user;
+    }
+
 
     /** 实现接口 IdentityInterface */
 
@@ -102,7 +134,8 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        static::$_user =  static::findOne($id);
+        return static::$_user;
     }
 
     /**
@@ -113,7 +146,8 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['access_token' => $token]);
+        static::$_user = static::findOne(['access_token' => $token]);
+        return static::$_user;
     }
 
     /**
@@ -122,7 +156,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function getId()
     {
-        return $this->id;
+        return static::$_user->id;
     }
 
     /**
@@ -130,11 +164,11 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->auth_key;
+        return static::$_user->auth_key;
     }
 
     public function validateAuthKey($authKey)
     {
-        return $this->getAuthKey() === $authKey;
+        return static::$_user->getAuthKey() === $authKey;
     }
 }

@@ -18,9 +18,6 @@ class BaseController extends Controller
     public function init()
     {
         parent::init();
-        // 判断是否登录
-        if(!Yii::$app->user->isGuest)
-            return $this->goHome();
     }
 
     /**
@@ -34,13 +31,10 @@ class BaseController extends Controller
             ],
         ];
     }
-    
-    public function actionIndex(){
-        $this->goHome();
-    }
 
-    public function goLogin(){
-        $this->redirect('index/login');
+    public function goLogin()
+    {
+        $this->redirect('/login');
     }
     
 }
