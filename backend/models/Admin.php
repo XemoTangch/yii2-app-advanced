@@ -71,11 +71,8 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function validateUsername($attribute, $params)
     {
-        static::$_user = $this->getUserByUserName($this->username);
-        echo '<pre>';
-        print_r(static::$_user);
-        echo '</pre>';exit;
-        if(!static::$_user) $this->addError($attribute, '用户不存在，请重新输入用户名');
+        $res = $this->getUserByUserName($this->username);
+        if(!$res) $this->addError($attribute, '用户不存在，请重新输入用户名');
     }
 
     /**
@@ -85,10 +82,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function validatePassword($attribute, $params)
     {
-        echo '<pre>';
-        print_r(static::$_user);
-        echo '</pre>';exit;
-        $res = Yii::$app->security->validatePassword($this->password, static::$_user->password_hash);
+        $res = Yii::$app->security->validatePassword($this->password, $this->password_hash);
         if(!$res) $this->addError($attribute, '密码输入错误请重新输入');
     }
 
@@ -108,9 +102,19 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function login()
     {
-        if (!$this->validate() || !static::$_user) return false;
+        $user = $this->getUserByUserName($this->username);
+        if (!$user->validate()){
+            echo '<pre>';
+            print_r($user->getErrors());
+            echo '</pre>';
+        }else{
+            echo '<pre>';
+            print_r($user->getErrors());
+            echo '</pre>';
+        }
+        return false;
         $_duration = $this->rememberMe ? 3600 * 24 * 30 : 0;
-        return Yii::$app->user->login(static::$_user, $_duration);
+        return Yii::$app->user->login($user, $_duration);
     }
     
     /**
@@ -120,8 +124,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function getUserByUserName($username)
     {
-        static::$_user = static::findONe(['username' => $username]);
-        return static::$_user;
+        return static::findONe(['username' => $username]);
     }
 
 
@@ -134,8 +137,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        static::$_user =  static::findOne($id);
-        return static::$_user;
+        return static::findOne($id);
     }
 
     /**
@@ -146,8 +148,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        static::$_user = static::findOne(['access_token' => $token]);
-        return static::$_user;
+        return static::findOne(['access_token' => $token]);
     }
 
     /**
@@ -156,7 +157,7 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function getId()
     {
-        return static::$_user->id;
+        return $this->id;
     }
 
     /**
@@ -164,11 +165,11 @@ class Admin extends \common\models\Admin implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return static::$_user->auth_key;
+        return $this->auth_key;
     }
 
     public function validateAuthKey($authKey)
     {
-        return static::$_user->getAuthKey() === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 }
