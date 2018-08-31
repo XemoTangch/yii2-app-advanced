@@ -10,7 +10,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Admin;
+use backend\models\AdminLogin;
 
 class LoginController extends BaseController
 {
@@ -21,7 +21,6 @@ class LoginController extends BaseController
 
     /**
      * 登录
-     * @return string|\yii\web\Response
      */
     public function actionIndex()
     {
@@ -29,13 +28,14 @@ class LoginController extends BaseController
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
-        $model = new Admin();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $model = new AdminLogin();
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->login()){
+                $this->goHome();
+            }
+            die($model->getFirstErrorOne());
         } else {
             $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
