@@ -24,14 +24,13 @@ class LoginController extends BaseController
      */
     public function actionIndex()
     {
-        $this->layout = false;
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $model = new AdminLogin();
         if ($model->load(Yii::$app->request->post())) {
             if($model->login()){
-                $this->goHome();
+                die('1');
             }
             die($model->getFirstErrorOne());
         } else {
