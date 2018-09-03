@@ -4,12 +4,12 @@
  * Email: jmphper@foxmail.com
  * Date:  2018/08/28
  * Time:  20:58
- * Desc:
+ * Desc:  首页
  */
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = '后台管理首页';
 
 ?>
 <div class="site-index">

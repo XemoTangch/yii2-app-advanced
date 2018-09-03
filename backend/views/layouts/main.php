@@ -23,7 +23,18 @@ $this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-h
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <link rel="shortcut icon" href="<?=Url::to('@web/metronic/demo/default/media/img/logo/favicon.ico')?>" />
+    <!--begin::Web font -->
+    <?php $this->registerJsFile('@web/metronic/webfontloader.js', ['position' => $this::POS_HEAD]) ?>
+    <!--end::Web font -->
     <?php $this->head() ?>
+    <script>
+        WebFont.load({
+            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
 </head>
 <body class="<?=$this->params['body_class']?>">
 <?php $this->beginBody() ?>
