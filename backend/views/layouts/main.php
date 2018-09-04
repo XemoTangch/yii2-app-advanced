@@ -10,7 +10,11 @@ use yii\helpers\Url;
 
 AdminAsset::register($this);
 VueAsset::register($this);
-$this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default';
+
+// mini菜单版
+//$this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default';
+
+$this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -39,7 +43,22 @@ $this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-h
 <body class="<?=$this->params['body_class']?>">
 <?php $this->beginBody() ?>
 
-<?= $content ?>
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <?= $this->render('/public/header') ?>
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <?= $this->render('/public/menu') ?>
+        <!-- BEGIN: Subheader and content -->
+        <?= $content ?>
+        <!-- END: Subheader and content -->
+    </div>
+    <!-- end::Body -->
+    <?= $this->render('/public/footer') ?>
+</div>
+<!-- end:: Page -->
+
+<?= $this->render('/public/components') ?>
 
 <!--<div class="wrap">
     <?php

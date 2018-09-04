@@ -39,13 +39,7 @@ $this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-h
 <body class="<?=$this->params['body_class']?>">
 <?php $this->beginBody() ?>
 
-<div class="m-grid m-grid--hor m-grid--root m-page">
-    <?= $this->render('/public/header') ?>
-    <?= $content ?>
-    <?= $this->render('/public/footer') ?>
-</div>
-
-<?= $this->render('/public/components') ?>
+<?= $content ?>
 
 <!--<div class="wrap">
     <?php
