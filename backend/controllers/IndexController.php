@@ -40,6 +40,13 @@ class IndexController extends AdminController
         return $this->render('index');
     }
 
+    public function actionTest(){
+        $auth = Yii::$app->authManager;
+        echo '<pre>';
+        print_r($auth->getPermissionsByUser(1));
+        echo '</pre>';
+    }
+
     /**
      * Logout action.
      */
