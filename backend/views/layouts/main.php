@@ -5,11 +5,13 @@
 
 use backend\assets\AdminAsset;
 use common\assets\VueAsset;
+use common\assets\JqueryAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 AdminAsset::register($this);
 VueAsset::register($this);
+JqueryAsset::register($this);
 
 // mini菜单版
 //$this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default';
@@ -28,6 +30,7 @@ $this->params['body_class'] = 'm-page--fluid m--skin- m-content--skin-light2 m-h
     <title><?= Html::encode($this->title) ?></title>
     <link rel="shortcut icon" href="<?=Url::to('@web/metronic/demo/default/media/img/logo/favicon.ico')?>" />
     <!--begin::Web font -->
+    <?php $this->registerJsFile('@web/metronic/webfontloader.js', ['position' => $this::POS_HEAD]) ?>
     <?php $this->registerJsFile('@web/metronic/webfontloader.js', ['position' => $this::POS_HEAD]) ?>
     <!--end::Web font -->
     <?php $this->head() ?>

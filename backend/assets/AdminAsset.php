@@ -20,5 +20,6 @@ class AdminAsset extends AssetBundle
         'metronic/demo/default/base/scripts.bundle.js',
     ];
     public $depends = [
+        'yii\web\JqueryAsset',
     ];
 }

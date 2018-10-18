@@ -9,6 +9,158 @@
 
 use yii\helpers\Url;
 
+// 获取权限
+$auth = Yii::$app->authManager;
+$permissions = $auth->getPermissionsByUser(Yii::$app->user->getId());
+
+$menus = [
+    [
+        'name' => '页面模板',
+        'child' => [
+            [
+                'name'=>'页面模板',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '图片上传',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+    [
+        'name' => '用户',
+        'child' => [
+            [
+                'name' => '用户',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '用户列表',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+            [
+                'name'=>'等级',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '等级列表',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+            [
+                'name'=>'任务',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '任务列表',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+    [
+        'name' => '内容',
+        'child' => [
+            [
+                'name'=>'文章',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '文章列表',
+                        'uri' => '/demo/image-upload',
+                    ],
+                    [
+                        'name' => '文章类型',
+                        'uri' => '/demo/image-upload',
+                    ],
+                    [
+                        'name' => '文章标签',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+    [
+        'name' => '广告',
+        'child' => [
+            [
+                'name'=>'普通广告',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '广告列表',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+    [
+        'name' => '工具',
+        'child' => [
+            [
+                'name'=>'数据统计',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '全站数据统计',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+            [
+                'name'=>'运营工具',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '发送短信',
+                        'uri' => '/demo/image-upload',
+                    ],
+                    [
+                        'name' => '站内消息',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+            [
+                'name'=>'缓存',
+                'icon' => 'flaticon-layers',
+                'child'=>[
+                    [
+                        'name' => '缓存管理',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+    [
+        'name' => '系统',
+        'child' => [
+            [
+                'name' => '管理员',
+                'icon' => 'flaticon-user-settings',
+                'child'=>[
+                    [
+                        'name' => '管理员管理',
+                        'uri' => '/demo/image-upload',
+                    ],
+                    [
+                        'name' => '角色管理',
+                        'uri' => '/demo/image-upload',
+                    ],
+                ]
+            ],
+        ],
+    ],
+];
 ?>
 <!-- BEGIN: Left Aside -->
 <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
@@ -40,287 +192,49 @@ use yii\helpers\Url;
                     </span>
                 </a>
             </li>
+
+            <?php foreach($menus as $menu1): ?>
             <li class="m-menu__section">
                 <h4 class="m-menu__section-text">
-                    用户
+                    <?=$menu1['name']?>
                 </h4>
                 <i class="m-menu__section-icon flaticon-more-v3"></i>
             </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                <a  href="#" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">
-										用户
-									</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-                            <span class="m-menu__link">
-                                <span class="m-menu__link-text">
-                                    用户
+                <?php foreach($menu1['child'] as $menu2):?>
+                <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
+                    <a  href="#" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon <?=$menu2['icon']?>"></i>
+                        <span class="m-menu__link-text"><?=$menu2['name']?></span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="m-menu__submenu ">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
+                                <span class="m-menu__link">
+                                    <span class="m-menu__link-text">
+                                        <?=$menu2['name']?>
+                                    </span>
                                 </span>
-                            </span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    用户管理
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    等级管理
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    任务管理
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__section">
-                <h4 class="m-menu__section-text">
-                    内容
-                </h4>
-                <i class="m-menu__section-icon flaticon-more-v3"></i>
-            </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                <a  href="#" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">
-                        内容
-                    </span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-                            <span class="m-menu__link">
-                                <span class="m-menu__link-text">
-                                    Base
-                                </span>
-                            </span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    State Colors
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link m-menu__toggle">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    Tabs
-                                </span>
-                                <i class="m-menu__ver-arrow la la-angle-right"></i>
-                            </a>
-                            <div class="m-menu__submenu ">
-                                <span class="m-menu__arrow"></span>
-                                <ul class="m-menu__subnav">
-                                    <li class="m-menu__item " aria-haspopup="true" >
-                                        <a  href="components/base/tabs/bootstrap.html" class="m-menu__link ">
-                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="m-menu__link-text">
-                                                Bootstrap Tabs
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item " aria-haspopup="true" >
-                                        <a  href="components/base/tabs/line.html" class="m-menu__link ">
-                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="m-menu__link-text">
-                                                Line Tabs
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__section">
-                <h4 class="m-menu__section-text">
-                    广告
-                </h4>
-                <i class="m-menu__section-icon flaticon-more-v3"></i>
-            </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                <a  href="#" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">
-										广告
-									</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-                            <span class="m-menu__link">
-                                <span class="m-menu__link-text">
-                                    广告列表
-                                </span>
-                            </span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    新增广告
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__section">
-                <h4 class="m-menu__section-text">
-                    工具
-                </h4>
-                <i class="m-menu__section-icon flaticon-more-v3"></i>
-            </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                <a  href="#" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">
-                        工具
-                    </span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-                            <span class="m-menu__link">
-                                <span class="m-menu__link-text">
-                                    Base
-                                </span>
-                            </span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    State Colors
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__section">
-                <h4 class="m-menu__section-text">
-                    系统
-                </h4>
-                <i class="m-menu__section-icon flaticon-more-v3"></i>
-            </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                <a  href="#" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-user-settings"></i>
-                    <span class="m-menu__link-text">
-										管理员
-									</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-                            <span class="m-menu__link">
-                                <span class="m-menu__link-text">
-                                    管理员
-                                </span>
-                            </span>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    管理员列表
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    新增管理员
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    角色
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    权限
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
-                            <a  href="#" class="m-menu__link">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">
-                                    规则
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                            </li>
+                            <?php foreach($menu2['child'] as $menu3):?>
+                            <li class="m-menu__item " aria-haspopup="true" >
+                                <a  href="<?=$menu3['uri']?>" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="m-menu__link-text">
+                                        <?=$menu3['name']?>
+                                    </span>
+                                </a>
+                            </li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                </li>
+                <?php endforeach;?>
+            <?php endforeach;?>
+            
         </ul>
     </div>
     <!-- END: Aside Menu -->

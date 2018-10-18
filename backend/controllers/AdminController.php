@@ -21,4 +21,17 @@ class AdminController extends BaseController
         }
     }
 
+
+    public function authInit()
+    {
+        $auth = Yii::$app->authManager;
+        $uid = Yii::$app->user->getId();
+        // 获取当前用户所有角色
+        $roles = $auth->getRolesByUser($uid);
+        // 获取用户所有权限
+        $premssions = $auth->getPermissionsByUser($uid);
+        echo '<pre>';
+        print_r(key_exists('addAdmins', $premssions));
+        echo '</pre>';
+    }
 }

@@ -41,10 +41,7 @@ class IndexController extends AdminController
     }
 
     public function actionTest(){
-        $auth = Yii::$app->authManager;
-        echo '<pre>';
-        print_r($auth->getPermissionsByUser(1));
-        echo '</pre>';
+
     }
 
     /**
